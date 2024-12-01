@@ -1,53 +1,54 @@
-//! Day 1: Trebuchet!?
+//! Day 1: Historian Hysteria
 //!
 //! <https://adventofcode.com/2024/day/1>
-use std::fmt::Display;
+use std::{collections::HashMap, fmt::Display};
 use aoc_2024::Solution;
 
 pub struct Day1;
 
 impl Solution for Day1 {
-    const NAME: &'static str = "Trebuchet!?";
+    const NAME: &'static str = "Historian Hysteria";
 
     /// # Panics
     ///
-    /// If no digits exist on a line
+    /// If lines do not follow "<number>   <number>" format
     fn part_one<T: Display>(&self, inp: T) -> usize {
-        inp.to_string()
-            .lines()
-            .map(|line| {
-                let mut digits = line.chars()
-                    .filter_map(|c| c
-                        .to_digit(10)
-                        .and_then(|c| usize::try_from(c).ok())
-                    );
-                let first = digits
-                    .next()
-                    .unwrap();
-                first * 10 + digits
-                    .last()
-                    .unwrap_or(first)
-            })
+        let mut list1 = Vec::new();
+        let mut list2 = Vec::new();
+
+        for line in inp.to_string().lines() {
+            let (a, b) = line.split_once("   ").unwrap();
+
+            list1.push(a.parse::<usize>().unwrap());
+            list2.push(b.parse::<usize>().unwrap());
+        }
+
+        list1.sort_unstable();
+        list2.sort_unstable();
+
+        list1.into_iter()
+            .zip(list2.into_iter())
+            .map(|(a, b)| a.abs_diff(b))
             .sum()
     }
 
     fn part_two<T: Display>(&self, inp: T) -> usize {
-        let mut inp = inp.to_string();
-        let map = [
-            ("one", "1"),
-            ("two", "2"),
-            ("three", "3"),
-            ("four", "4"),
-            ("five", "5"),
-            ("six", "6"),
-            ("seven", "7"),
-            ("eight", "8"),
-            ("nine", "9"),
-        ];
-        for (key, val) in map {
-            inp = inp.replace(key, format!("{key}{val}{key}").as_str());
+        let mut list1 = Vec::new();
+        let mut counter = HashMap::new();
+
+        for line in inp.to_string().lines() {
+            let (a, b) = line.split_once("   ").unwrap();
+
+            list1.push(a.parse::<usize>().unwrap());
+            *counter.entry(b.parse::<usize>().unwrap())
+                .or_insert(0) += 1;
         }
-        self.part_one(inp)
+
+        list1.sort_unstable();
+
+        list1.into_iter()
+            .map(|a| a * counter.get(&a).unwrap_or(&0))
+            .sum()
     }
 
     fn run(&self, inp: String) {
@@ -57,8 +58,8 @@ impl Solution for Day1 {
         println!("Part 1: {p1}");
         println!("Part 2: {p2}");
 
-        assert_eq!(p1, 53651);
-        assert_eq!(p2, 53894);
+        assert_eq!(p1, 1319616);
+        assert_eq!(p2, 27267728);
     }
 }
 

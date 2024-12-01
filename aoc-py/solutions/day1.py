@@ -1,53 +1,48 @@
 """
-Day 1: Trebuchet?!
+Day 1: Historian Hysteria
 
 https://adventofcode.com/2024/day/1
 """
 __all__ = ('Day1',)
 
 from typing import ClassVar
+from collections import defaultdict
 
 from ..solution import Solution
 
 class Day1(Solution):
-    NAME: ClassVar[str] = 'Trebuchet?!'
-    NUM_MAP: ClassVar[dict[str, str]] = {
-        'one': '1',
-        'two': '2',
-        'three': '3',
-        'four': '4',
-        'five': '5',
-        'six': '6',
-        'seven': '7',
-        'eight': '8',
-        'nine': '9'
-    }
+    NAME: ClassVar[str] = 'Historian Hysteria'
 
     def part_one(self, inp: str) -> int:
-        return sum(
-            int(
-                (digits := [c for c in line if c.isdigit()])[0]
-                + digits[-1]
-            )
-            for line in inp.splitlines()
-        )
+        list1 = []
+        list2 = []
+
+        for line in inp.splitlines():
+            a, b = line.split()
+
+            list1.append(int(a))
+            list2.append(int(b))
+
+        list1.sort()
+        list2.sort()
+        return sum(abs(a - b) for a, b in zip(list1, list2))
 
     def part_two(self, inp: str) -> int:
-        for key in self.NUM_MAP:
-            inp = inp.replace(key, key + self.NUM_MAP[key] + key)
-            # accounts for overlapping words:
-            #   i.e. 'twone'
-            #   -> 'twone1one' (when key = 'one')
-            #   -> '2ne1one'   (when key = 'two')
-            #   -> 21 (correct)
-            #
-            # Without appending `key` to either side:
-            #   'twone' -> '2ne' -> 2 (wrong)
-        return self.part_one(inp)
+        list1 = []
+        counter = defaultdict(int)
+
+        for line in inp.splitlines():
+            a, b = line.split()
+
+            list1.append(int(a))
+            counter[int(b)] += 1
+
+        list1.sort()
+        return sum(a * counter[a] for a in list1)
 
     def run(self, inp: str) -> None:
         print('Part 1:', p1 := self.part_one(inp))
         print('Part 2:', p2 := self.part_two(inp))
 
-        assert p1 == 53651
-        assert p2 == 53894
+        assert p1 == 1319616
+        assert p2 == 27267728
