@@ -1,0 +1,24 @@
+[project]
+name = "aoc-py"
+version = "0.1.0"
+authors = [
+    {name = "Tom the Bomb"}
+]
+requires-python = ">=3.10"
+description = "Python 3 Advent of Code 2024 Solutions"
+license = {file = "LICENSE"}
+readme = "README.md"
+keywords = ["aoc", "python", "cli"]
+classifiers = [
+    "Environment :: Console",
+    "Natural Language :: English",
+    "Programming Language :: Python",
+    "License :: OSI Approved :: MIT License",
+]
+
+[project.urls]
+Repository = "https://github.com/Tom-the-Bomb/aoc-2024"
+"Bug Tracker" = "https://github.com/Tom-the-Bomb/aoc-2024/issues"
+
+[tool.pyright]
+typeCheckingMode = "basic"
