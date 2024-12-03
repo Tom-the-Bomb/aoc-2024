@@ -14,7 +14,16 @@ overflow-checks = true
 lto = "fat"
 
 [dependencies]
+regex = "1.11"
 
 [[bin]]
 name = "day1"
 path = "src/bin/day1.rs"
+
+[[bin]]
+name = "day2"
+path = "src/bin/day2.rs"
+
+[[bin]]
+name = "day3"
+path = "src/bin/day3.rs"
