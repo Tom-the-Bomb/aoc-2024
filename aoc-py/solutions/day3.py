@@ -16,14 +16,14 @@ class Day3(Solution):
     def part_one(self, inp: str) -> int:
         return sum(
             int(mul.group(1)) * int(mul.group(2))
-            for mul in re.finditer(r'mul\(([0-9]+),([0-9]+)\)', inp)
+            for mul in re.finditer(r'mul\(([0-9]{1,3}),([0-9]{1,3})\)', inp)
         )
 
     def part_two(self, inp: str) -> int:
         total = 0
         do = True
 
-        for mul in re.finditer(r'mul\(([0-9]+),([0-9]+)\)|do\(\)|don\'t\(\)', inp):
+        for mul in re.finditer(r'mul\(([0-9]{1,3}),([0-9]{1,3})\)|do\(\)|don\'t\(\)', inp):
             match mul.group():
                 case 'do()':
                     do = True

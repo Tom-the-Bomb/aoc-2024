@@ -12,7 +12,7 @@ impl Solution for Day3 {
     const NAME: &'static str = "Mull It Over";
 
     fn part_one<T: Display>(&self, inp: T) -> usize {
-        Regex::new(r"mul\(([0-9]+),([0-9]+)\)")
+        Regex::new(r"mul\(([0-9]{1,3}),([0-9]{1,3})\)")
             .unwrap()
             .captures_iter(&*inp.to_string())
             .map(|c| {
@@ -27,7 +27,7 @@ impl Solution for Day3 {
         let mut add = true;
         let mut total = 0;
 
-        for c in Regex::new(r"mul\(([0-9]+),([0-9]+)\)|do\(()()\)|don\'t\(()()\)")
+        for c in Regex::new(r"mul\(([0-9]{1,3}),([0-9]{1,3})\)|do\(()()\)|don\'t\(()()\)")
             .unwrap()
             .captures_iter(&*inp.to_string())
         {
