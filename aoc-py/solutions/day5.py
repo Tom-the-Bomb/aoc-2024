@@ -53,7 +53,7 @@ class Day5(Solution):
             for i, page in enumerate(update):
                 indices[page] = i
 
-            # maps K -> (# of times the rule `K|<any>` occurs in the ruleset)
+            # maps `K` -> (# of times the rule `K|<any>` occurs in the ruleset)
             counter = defaultdict(int)
             invalid = False
 
@@ -69,7 +69,8 @@ class Day5(Solution):
             if invalid:
                 # sorts the update to make it valid
                 #
-                # pages with more pages that are supposed to be after it: (high `counter[page]` value) should go at the start and vice versa
+                # pages with more pages that are supposed to be after it: (ones with a high `counter[page]` value)
+                # should go at the start and vice versa
                 update.sort(key=lambda page: -counter[page])
                 total += int(update[len(update) // 2])
         return total
