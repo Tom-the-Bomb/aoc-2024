@@ -17,7 +17,6 @@ static DIRECTIONS: [(i8, i8); 8] = [
     (-1, 1),
     (-1, -1),
 ];
-static XMAS: &[u8; 4] = b"XMAS";
 
 lazy_static::lazy_static! {
     static ref CORNERS: HashSet<u8> = HashSet::from_iter([b'M', b'S']);
@@ -50,7 +49,7 @@ impl Day4 {
             return false;
         }
 
-        if grid[i][j] == XMAS[progression] {
+        if grid[i][j] == b"XMAS"[progression] {
             return Self::find_xmas(
                 grid,
                 n_rows, n_cols,
