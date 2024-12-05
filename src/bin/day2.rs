@@ -21,9 +21,9 @@ impl Solution for Day2 {
                     .collect::<Vec<_>>();
                 let mut increasing = false;
 
-                report.array_windows::<2>()
+                !report.array_windows::<2>()
                     .enumerate()
-                    .find(|&(i, [a, b])| {
+                    .any(|(i, [a, b])| {
                         let jump = b - a;
 
                         if i == 0 {
@@ -32,7 +32,6 @@ impl Solution for Day2 {
 
                         !(1..=3).contains(&if increasing { jump } else { -jump })
                     })
-                    .is_none()
             })
             .count()
     }
@@ -41,7 +40,7 @@ impl Solution for Day2 {
         inp.to_string()
             .lines()
             .filter(|line| {
-                (0..line.len()).find(|&remove| {
+                (0..line.len()).any(|remove| {
                     let report = line
                         .split_whitespace()
                         .enumerate()
@@ -49,9 +48,9 @@ impl Solution for Day2 {
                         .collect::<Vec<_>>();
                     let mut increasing = false;
 
-                    report.array_windows::<2>()
+                    !report.array_windows::<2>()
                         .enumerate()
-                        .find(|&(i, [a, b])| {
+                        .any(|(i, [a, b])| {
                             let jump = b - a;
 
                             if i == 0 {
@@ -60,9 +59,7 @@ impl Solution for Day2 {
 
                             !(1..=3).contains(&if increasing { jump } else { -jump })
                         })
-                        .is_none()
                 })
-                .is_some()
             })
             .count()
     }

@@ -33,6 +33,7 @@ impl Day4 {
     }
 
     #[must_use]
+    #[allow(clippy::too_many_arguments)]
     fn find_xmas(
         grid: &[Vec<u8>],
         n_rows: usize,
@@ -66,6 +67,7 @@ impl Day4 {
 impl Solution for Day4 {
     const NAME: &'static str = "Ceres Search";
 
+    #[allow(clippy::cast_sign_loss)]
     fn part_one<T: Display>(&self, inp: T) -> usize {
         let grid = &Self::get_grid(inp);
         let n_rows = grid.len();

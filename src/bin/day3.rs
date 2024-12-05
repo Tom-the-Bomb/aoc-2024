@@ -14,7 +14,7 @@ impl Solution for Day3 {
     fn part_one<T: Display>(&self, inp: T) -> usize {
         Regex::new(r"mul\(([0-9]{1,3}),([0-9]{1,3})\)")
             .unwrap()
-            .captures_iter(&*inp.to_string())
+            .captures_iter(&inp.to_string())
             .map(|c| {
                 let (_, [a, b]) = c.extract();
 
@@ -29,7 +29,7 @@ impl Solution for Day3 {
 
         for c in Regex::new(r"mul\(([0-9]{1,3}),([0-9]{1,3})\)|do\(()()\)|don\'t\(()()\)")
             .unwrap()
-            .captures_iter(&*inp.to_string())
+            .captures_iter(&inp.to_string())
         {
             match c.extract() {
                 ("do()", _) => add = true,
@@ -49,8 +49,8 @@ impl Solution for Day3 {
         println!("Part 1: {p1}");
         println!("Part 2: {p2}");
 
-        assert_eq!(p1, 164730528);
-        assert_eq!(p2, 70478672);
+        assert_eq!(p1, 164_730_528);
+        assert_eq!(p2, 70_478_672);
     }
 }
 

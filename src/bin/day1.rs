@@ -27,7 +27,7 @@ impl Solution for Day1 {
         list2.sort_unstable();
 
         list1.into_iter()
-            .zip(list2.into_iter())
+            .zip(list2)
             .map(|(a, b)| a.abs_diff(b))
             .sum()
     }
@@ -58,8 +58,8 @@ impl Solution for Day1 {
         println!("Part 1: {p1}");
         println!("Part 2: {p2}");
 
-        assert_eq!(p1, 1319616);
-        assert_eq!(p2, 27267728);
+        assert_eq!(p1, 1_319_616);
+        assert_eq!(p2, 27_267_728);
     }
 }
 

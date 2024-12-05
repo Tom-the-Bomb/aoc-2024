@@ -68,15 +68,12 @@ impl Solution for Day5 {
             let mut invalid = false;
 
             for (a, b) in &rules {
-                match (indices.get(a), indices.get(b)) {
-                    (Some(i), Some(j)) => {
-                        *counter.entry(a).or_insert(0) += 1;
+                if let (Some(i), Some(j)) = (indices.get(a), indices.get(b)) {
+                    *counter.entry(a).or_insert(0) += 1;
 
-                        if i > j {
-                            invalid = true;
-                        }
-                    },
-                    _ => (),
+                    if i > j {
+                        invalid = true;
+                    }
                 }
             }
 
