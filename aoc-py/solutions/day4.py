@@ -23,7 +23,7 @@ class Day4(Solution):
     )
     CORNERS: ClassVar[set[str]] = {'M', 'S'}
 
-    def find_xmas(
+    def _find_xmas(
         self,
         grid: list[str],
         n_rows: int,
@@ -39,7 +39,7 @@ class Day4(Solution):
             return False
 
         if grid[i][j] == 'XMAS'[progression]:
-            return self.find_xmas(grid, n_rows, n_cols, i + dr, j + dc, dr, dc, progression + 1)
+            return self._find_xmas(grid, n_rows, n_cols, i + dr, j + dc, dr, dc, progression + 1)
         return False
 
     def part_one(self, inp: str) -> int:
@@ -54,7 +54,7 @@ class Day4(Solution):
                 # potential start of XMAS chain
                 if letter == 'X':
                     for dr, dc in self.DIRECTIONS:
-                        total += self.find_xmas(grid, n_rows, n_cols, i, j, dr, dc, 0)
+                        total += self._find_xmas(grid, n_rows, n_cols, i, j, dr, dc, 0)
         return total
 
     def part_two(self, inp: str) -> int:
