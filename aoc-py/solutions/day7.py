@@ -23,12 +23,12 @@ class Day7(Solution):
             target,
             terms,
             curr + term,
-            progression + 1
+            progression + 1,
         ) or self.solve_p1(
             target,
             terms,
             curr * term,
-            progression + 1
+            progression + 1,
         )
 
     def solve_p2(self, target: int, terms: list[int], curr: int, progression: int) -> bool:
@@ -41,26 +41,24 @@ class Day7(Solution):
             target,
             terms,
             curr + term,
-            progression + 1
+            progression + 1,
         ) or self.solve_p2(
             target,
             terms,
             curr * term,
-            progression + 1
+            progression + 1,
         ) or self.solve_p2(
             target,
             terms,
             # `int(log10(term)) + 1` gives us the # of digits in the integer: `term`
             curr * 10 ** (int(log10(term)) + 1) + term,
-            progression + 1
+            progression + 1,
         )
 
     def part_one(self, inp: str) -> int:
-        equations = inp.splitlines()
-
         total = 0
 
-        for equation in equations:
+        for equation in inp.splitlines():
             target, terms = equation.split(':')
 
             first, *terms = [int(term) for term in terms.split()]
@@ -71,11 +69,9 @@ class Day7(Solution):
         return total
 
     def part_two(self, inp: str) -> int:
-        equations = inp.splitlines()
-
         total = 0
 
-        for equation in equations:
+        for equation in inp.splitlines():
             target, terms = equation.split(':')
 
             first, *terms = [int(term) for term in terms.split()]
