@@ -30,7 +30,7 @@ class Day6(Solution):
             case 0, -1:
                 return -1, 0
             case _:
-                return 0, 0
+                raise ValueError('Non-orthogonal direction provided')
 
     def _get_path(
         self,
