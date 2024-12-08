@@ -1,3 +1,4 @@
+use std::fmt::Display;
 
 #[must_use]
 pub fn gcd(a: usize, b: usize) -> usize {
@@ -13,4 +14,12 @@ where
         1,
         |num, ans| num * ans / gcd(num, ans),
     )
+}
+
+#[must_use]
+pub fn get_grid<T: Display>(inp: T) -> Vec<Vec<u8>> {
+    inp.to_string()
+        .lines()
+        .map(|line| line.as_bytes().to_vec())
+        .collect::<Vec<_>>()
 }

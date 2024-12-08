@@ -16,6 +16,7 @@ lto = "fat"
 [dependencies]
 regex = "1.11"
 lazy_static = "1.5"
+itertools = "0.13"
 
 [[bin]]
 name = "day1"
@@ -36,3 +37,11 @@ path = "src/bin/day4.rs"
 [[bin]]
 name = "day5"
 path = "src/bin/day5.rs"
+
+[[bin]]
+name = "day7"
+path = "src/bin/day7.rs"
+
+[[bin]]
+name = "day8"
+path = "src/bin/day8.rs"

@@ -3,7 +3,7 @@
 //! <https://adventofcode.com/2024/day/4>
 
 use std::{collections::HashSet, fmt::Display};
-use aoc_2024::Solution;
+use aoc_2024::{Solution, get_grid};
 
 pub struct Day4;
 
@@ -23,15 +23,6 @@ lazy_static::lazy_static! {
 }
 
 impl Day4 {
-    #[inline]
-    #[must_use]
-    fn get_grid<T: Display>(inp: T) -> Vec<Vec<u8>> {
-        inp.to_string()
-            .lines()
-            .map(|line| line.as_bytes().to_vec())
-            .collect::<Vec<_>>()
-    }
-
     #[must_use]
     #[allow(clippy::too_many_arguments)]
     fn find_xmas(
@@ -69,7 +60,7 @@ impl Solution for Day4 {
 
     #[allow(clippy::cast_sign_loss)]
     fn part_one<T: Display>(&self, inp: T) -> usize {
-        let grid = &Self::get_grid(inp);
+        let grid = &get_grid(inp);
         let n_rows = grid.len();
         let n_cols = grid[0].len();
 
@@ -84,7 +75,7 @@ impl Solution for Day4 {
     }
 
     fn part_two<T: Display>(&self, inp: T) -> usize {
-        let grid = &Self::get_grid(inp);
+        let grid = &get_grid(inp);
         let n_cols = grid[0].len();
 
         (1..grid.len() - 1)
