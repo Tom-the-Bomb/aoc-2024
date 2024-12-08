@@ -13,41 +13,41 @@ from ..solution import Solution
 class Day7(Solution):
     NAME: ClassVar[str] = 'Bridge Repair'
 
-    def solve_p1(self, target: int, terms: list[int], curr: int, progression: int) -> bool:
+    def _solve_p1(self, target: int, terms: list[int], curr: int, progression: int) -> bool:
         if progression == len(terms):
             return target == curr
 
         term = terms[progression]
 
-        return self.solve_p1(
+        return self._solve_p1(
             target,
             terms,
             curr + term,
             progression + 1,
-        ) or self.solve_p1(
+        ) or self._solve_p1(
             target,
             terms,
             curr * term,
             progression + 1,
         )
 
-    def solve_p2(self, target: int, terms: list[int], curr: int, progression: int) -> bool:
+    def _solve_p2(self, target: int, terms: list[int], curr: int, progression: int) -> bool:
         if progression == len(terms):
             return target == curr
 
         term = terms[progression]
 
-        return self.solve_p2(
+        return self._solve_p2(
             target,
             terms,
             curr + term,
             progression + 1,
-        ) or self.solve_p2(
+        ) or self._solve_p2(
             target,
             terms,
             curr * term,
             progression + 1,
-        ) or self.solve_p2(
+        ) or self._solve_p2(
             target,
             terms,
             # `int(log10(term)) + 1` gives us the # of digits in the integer: `term`
@@ -64,7 +64,7 @@ class Day7(Solution):
             first, *terms = [int(term) for term in terms.split()]
             target = int(target)
 
-            if self.solve_p1(target, terms, first, 0):
+            if self._solve_p1(target, terms, first, 0):
                 total += target
         return total
 
@@ -77,7 +77,7 @@ class Day7(Solution):
             first, *terms = [int(term) for term in terms.split()]
             target = int(target)
 
-            if self.solve_p2(target, terms, first, 0):
+            if self._solve_p2(target, terms, first, 0):
                 total += target
         return total
 
