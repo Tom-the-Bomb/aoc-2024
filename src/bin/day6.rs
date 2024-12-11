@@ -2,7 +2,11 @@
 //!
 //! <https://adventofcode.com/2024/day/6>
 
-use std::{collections::HashSet, fmt::Display};
+use std::{
+    collections::HashSet,
+    fmt::Display,
+    ops::Range,
+};
 use aoc_2024::{Solution, get_grid};
 
 pub struct Day6;
@@ -32,8 +36,8 @@ impl Day6 {
     #[allow(clippy::cast_sign_loss)]
     fn get_path(
         grid: &[Vec<u8>],
-        n_rows: usize,
-        n_cols: usize,
+        rows: &Range<usize>,
+        cols: &Range<usize>,
         start @ (mut row, mut col): (usize, usize),
     ) -> HashSet<(usize, usize)> {
         let mut dr = -1;
@@ -46,7 +50,7 @@ impl Day6 {
             row = row.wrapping_add(dr as usize);
             col = col.wrapping_add(dc as usize);
 
-            if !(0..n_rows).contains(&row) || !(0..n_cols).contains(&col) {
+            if !rows.contains(&row) || !cols.contains(&col) {
                 break seen;
             }
 
@@ -69,10 +73,10 @@ impl Solution for Day6 {
         let grid = get_grid(inp);
         let start = Self::find_start(&grid);
 
-        let n_rows = grid.len();
-        let n_cols = grid[0].len();
+        let rows = 0..grid.len();
+        let cols = 0..grid[0].len();
 
-        Self::get_path(&grid, n_rows, n_cols, start).len()
+        Self::get_path(&grid, &rows, &cols, start).len()
     }
 
     #[allow(clippy::cast_sign_loss)]
@@ -80,12 +84,12 @@ impl Solution for Day6 {
         let grid = get_grid(inp);
         let start = Self::find_start(&grid);
 
-        let n_rows = grid.len();
-        let n_cols = grid[0].len();
+        let rows = 0..grid.len();
+        let cols = 0..grid[0].len();
 
         let mut total = 0;
 
-        for obstacle in Self::get_path(&grid, n_rows, n_cols, start) {
+        for obstacle in Self::get_path(&grid, &rows, &cols, start) {
             let (mut row, mut col) = start;
 
             let mut dr = -1;
@@ -103,7 +107,7 @@ impl Solution for Day6 {
                     break;
                 }
 
-                if !(0..n_rows).contains(&row) || !(0..n_cols).contains(&col) {
+                if !rows.contains(&row) || !cols.contains(&col) {
                     break;
                 }
 

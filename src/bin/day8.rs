@@ -16,8 +16,8 @@ impl Solution for Day8 {
 
     fn part_one<T: Display>(&self, inp: T) -> usize {
         let grid = get_grid(inp);
-        let n_rows = grid.len();
-        let n_cols = grid[0].len();
+        let rows = 0..grid.len();
+        let cols = 0..grid[0].len();
 
         let mut antennae = HashMap::new();
 
@@ -46,11 +46,11 @@ impl Solution for Day8 {
                 r1 = r1.wrapping_sub(dr);
                 c1 = c1.wrapping_sub(dc);
 
-                if (0..n_rows).contains(&r2) && (0..n_cols).contains(&c2) {
+                if rows.contains(&r2) && cols.contains(&c2) {
                     antinodes.insert((r2, c2));
                 }
 
-                if (0..n_rows).contains(&r1) && (0..n_cols).contains(&c1) {
+                if rows.contains(&r1) && cols.contains(&c1) {
                     antinodes.insert((r1, c1));
                 }
             }
@@ -60,8 +60,8 @@ impl Solution for Day8 {
 
     fn part_two<T: Display>(&self, inp: T) -> usize {
         let grid = get_grid(inp);
-        let n_rows = grid.len();
-        let n_cols = grid[0].len();
+        let rows = 0..grid.len();
+        let cols = 0..grid[0].len();
 
         let mut antennae = HashMap::new();
         let mut antinodes = HashSet::new();
@@ -90,14 +90,14 @@ impl Solution for Day8 {
                 r1 = r1.wrapping_sub(dr);
                 c1 = c1.wrapping_sub(dc);
 
-                while (0..n_rows).contains(&r2) && (0..n_cols).contains(&c2) {
+                while rows.contains(&r2) && cols.contains(&c2) {
                     antinodes.insert((r2, c2));
 
                     r2 = r2.wrapping_add(dr);
                     c2 = c2.wrapping_add(dc);
                 }
 
-                while (0..n_rows).contains(&r1) && (0..n_cols).contains(&c1) {
+                while rows.contains(&r1) && cols.contains(&c1) {
                     antinodes.insert((r1, c1));
 
                     r1 = r1.wrapping_sub(dr);
