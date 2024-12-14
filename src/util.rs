@@ -1,6 +1,28 @@
 use std::fmt::Display;
 
 #[must_use]
+#[inline]
+pub const fn neighbors_4(row: usize, col: usize) -> [(usize, usize); 4] {
+    [
+        (row, col.wrapping_sub(1)),
+        (row, col.wrapping_add(1)),
+        (row.wrapping_sub(1), col),
+        (row.wrapping_add(1), col),
+    ]
+}
+
+#[must_use]
+#[inline]
+pub const fn neighbors_diag(row: usize, col: usize) -> [(usize, usize); 4] {
+    [
+        (row.wrapping_sub(1), col.wrapping_sub(1)),
+        (row.wrapping_sub(1), col.wrapping_add(1)),
+        (row.wrapping_add(1), col.wrapping_sub(1)),
+        (row.wrapping_add(1), col.wrapping_add(1)),
+    ]
+}
+
+#[must_use]
 pub fn gcd(a: usize, b: usize) -> usize {
     if b == 0 { a } else { gcd(b, a % b) }
 }
@@ -17,6 +39,7 @@ where
 }
 
 #[must_use]
+#[inline]
 pub fn get_grid<T: Display>(inp: T) -> Vec<Vec<u8>> {
     inp.to_string()
         .lines()

@@ -17,6 +17,7 @@ lazy_static::lazy_static! {
 }
 
 impl Day13 {
+    #[allow(clippy::cast_sign_loss)]
     fn solve<T: Display>(inp: T, target_offset: isize) -> usize {
         MACHINE_PATTERN
             .captures_iter(&inp.to_string())

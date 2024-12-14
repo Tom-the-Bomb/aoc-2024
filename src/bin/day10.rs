@@ -6,7 +6,7 @@ use std::{
     collections::{VecDeque, HashSet},
     fmt::Display
 };
-use aoc_2024::{Solution, get_grid};
+use aoc_2024::{Solution, get_grid, neighbors_4};
 
 pub struct Day10;
 
@@ -32,12 +32,7 @@ impl Solution for Day10 {
                         if num == 9 {
                             nines.insert((i, j));
                         } else {
-                            for (next_i, next_j) in [
-                                (i, j.wrapping_sub(1)),
-                                (i, j.wrapping_add(1)),
-                                (i.wrapping_sub(1), j),
-                                (i.wrapping_add(1), j),
-                            ] {
+                            for (next_i, next_j) in neighbors_4(i, j) {
                                 if rows.contains(&next_i)
                                     && cols.contains(&next_j)
                                     && grid[next_i][next_j] as usize - 48 == num + 1
@@ -71,12 +66,7 @@ impl Solution for Day10 {
                         if num == 9 {
                             count += 1;
                         } else {
-                            for (next_i, next_j) in [
-                                (i, j.wrapping_sub(1)),
-                                (i, j.wrapping_add(1)),
-                                (i.wrapping_sub(1), j),
-                                (i.wrapping_add(1), j),
-                            ] {
+                            for (next_i, next_j) in neighbors_4(i, j) {
                                 if rows.contains(&next_i)
                                     && cols.contains(&next_j)
                                     && grid[next_i][next_j] as usize - 48 == num + 1

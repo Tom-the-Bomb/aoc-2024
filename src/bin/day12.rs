@@ -6,7 +6,12 @@ use std::{
     collections::{HashSet, VecDeque},
     fmt::Display
 };
-use aoc_2024::{Solution, get_grid};
+use aoc_2024::{
+    Solution,
+    get_grid,
+    neighbors_4,
+    neighbors_diag,
+};
 
 pub struct Day12;
 
@@ -37,12 +42,7 @@ impl Solution for Day12 {
                     while let Some((i, j)) = to_check.pop_front() {
                         perimeter += 4;
 
-                        for next @ (next_i, next_j) in [
-                            (i, j.wrapping_sub(1)),
-                            (i, j.wrapping_add(1)),
-                            (i.wrapping_sub(1), j),
-                            (i.wrapping_add(1), j),
-                        ] {
+                        for next @ (next_i, next_j) in neighbors_4(i, j) {
                             if rows.contains(&next_i)
                                 && cols.contains(&next_j)
                                 && grid[next_i][next_j] == cell
@@ -86,12 +86,7 @@ impl Solution for Day12 {
 
                     while let Some((i, j)) = to_check.pop_front() {
 
-                        for next @ (next_i, next_j) in [
-                            (i, j.wrapping_sub(1)),
-                            (i, j.wrapping_add(1)),
-                            (i.wrapping_sub(1), j),
-                            (i.wrapping_add(1), j),
-                        ] {
+                        for next @ (next_i, next_j) in neighbors_4(i, j) {
                             if rows.contains(&next_i)
                                 && cols.contains(&next_j)
                                 && grid[next_i][next_j] == cell
@@ -102,12 +97,7 @@ impl Solution for Day12 {
                             }
                         }
 
-                        for (adj_i, adj_j) in [
-                            (i.wrapping_sub(1), j.wrapping_sub(1)),
-                            (i.wrapping_sub(1), j.wrapping_add(1)),
-                            (i.wrapping_add(1), j.wrapping_sub(1)),
-                            (i.wrapping_add(1), j.wrapping_add(1)),
-                        ] {
+                        for (adj_i, adj_j) in neighbors_diag(i, j) {
                             let side1_exists = rows.contains(&adj_i);
                             let side2_exists = rows.contains(&adj_j);
 
@@ -140,8 +130,8 @@ impl Solution for Day12 {
         println!("Part 1: {p1}");
         println!("Part 2: {p2}");
 
-        assert_eq!(p1, 1375574);
-        assert_eq!(p2, 830566);
+        assert_eq!(p1, 1_375_574);
+        assert_eq!(p2, 830_566);
     }
 }
 
