@@ -3,17 +3,16 @@
 //! <https://adventofcode.com/2024/day/13>
 
 use std::fmt::Display;
-use regex::{RegexBuilder, Regex};
+use regex::Regex;
 use aoc_2024::Solution;
 
 pub struct Day13;
 
 lazy_static::lazy_static! {
-    static ref MACHINE_PATTERN: Regex = RegexBuilder::new(
+    static ref MACHINE_PATTERN: Regex = Regex::new(
         r"Button A: X\+([0-9]+), Y\+([0-9]+)[\n\r]+Button B: X\+([0-9]+), Y\+([0-9]+)[\n\r]+Prize: X=([0-9]+), Y=([0-9]+)"
     )
-        .build()
-        .unwrap();
+    .unwrap();
 }
 
 impl Day13 {
