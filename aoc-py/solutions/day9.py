@@ -29,11 +29,9 @@ class Day9(Solution):
             if disk[i] is None:
                 if (last := disk.pop()) is None:
                     # simply try again as this continues the loop without increasing `i`
-
                     continue
 
                 disk[i] = last
-
             i += 1
 
         return sum(

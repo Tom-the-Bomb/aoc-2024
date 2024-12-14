@@ -13,7 +13,13 @@ from ..solution import Solution
 class Day11(Solution):
     NAME: ClassVar[str] = 'Plutonian Pebbles'
 
-    def blink(self, inp: str, n: int) -> int:
+    def _blink(self, inp: str, n: int) -> int:
+        # major optimization:
+        #
+        # - repetitive stones with the same value wll be generated quite often: store their frequencies as they weill behave the same
+        # - reduces memory used when storing stones and processing time
+        #
+        # - order of stones does not matter
         counter = Counter(inp.split())
 
         for _ in range(n):
@@ -35,10 +41,10 @@ class Day11(Solution):
         return sum(counter.values())
 
     def part_one(self, inp: str) -> int:
-        return self.blink(inp, 25)
+        return self._blink(inp, 25)
 
     def part_two(self, inp: str) -> int:
-        return self.blink(inp, 75)
+        return self._blink(inp, 75)
 
     def run(self, inp: str) -> None:
         print('Part 1:', p1 := self.part_one(inp))
