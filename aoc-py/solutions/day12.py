@@ -23,10 +23,10 @@ class Day12(Solution):
 
         for start_i, row in enumerate(grid):
             for start_j, cell in enumerate(row):
-                if (start_i, start_j) not in seen:
+                if (start := (start_i, start_j)) not in seen:
 
-                    to_check = deque([(start_i, start_j)])
-                    local_seen = {(start_i, start_j)}
+                    to_check = deque([start])
+                    local_seen = {start}
 
                     perimeter = 0
 
@@ -66,10 +66,10 @@ class Day12(Solution):
 
         for start_i, row in enumerate(grid):
             for start_j, cell in enumerate(row):
-                if (start_i, start_j) not in seen:
+                if (start := (start_i, start_j)) not in seen:
 
-                    to_check = deque([(start_i, start_j)])
-                    local_seen = {(start_i, start_j)}
+                    to_check = deque([start])
+                    local_seen = {start}
 
                     corners = 0
 
@@ -91,11 +91,14 @@ class Day12(Solution):
                                 to_check.append(next_c)
                                 local_seen.add(next_c)
 
-                        for dr, dc in (
-                            (-1, -1), (-1, 1), (1, -1), (1, 1),
+                        for adj_i, adj_j in (
+                            (i - 1, j - 1),
+                            (i - 1, j + 1),
+                            (i + 1, j - 1),
+                            (i + 1, j + 1),
                         ):
-                            side1_exists = (adj_i := i + dr) in range(n_rows)
-                            side2_exists = (adj_j := j + dc) in range(n_rows)
+                            side1_exists = adj_i in range(n_rows)
+                            side2_exists = adj_j in range(n_rows)
 
                             if (
                                 # convex corner: 2 adjacent neighbors do not exist
@@ -111,7 +114,8 @@ class Day12(Solution):
                                 # XE.. => then the `E` (at row 2, col 2) has a concave corner
                                 side1_exists
                                 and side2_exists
-                                and grid[adj_i][j] == grid[i][adj_j] == cell and grid[adj_i][adj_j] != cell
+                                and grid[adj_i][j] == grid[i][adj_j] == cell
+                                and grid[adj_i][adj_j] != cell
                             ):
                                 corners += 1
 

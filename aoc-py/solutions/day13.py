@@ -44,7 +44,7 @@ class Day13(Solution):
             # solve for `b_presses`:
             #             : b_presses = (ay * target_x - ax * target_y) / (ay * bx - ax * by)
             #
-            # substitue value of `b_presses` back into [1]:
+            # substitute the value of `b_presses` back into [1] and solve for `a_presses`:
             #
             # from [1]: a_presses = (target_x - bx * b_presses) / ax
             b_presses = (ay * target_x - ax * target_y) / (ay * bx - ax * by)
