@@ -21,26 +21,6 @@ class Day15(Solution):
             if cell == box
         )
 
-    def _push_p1(
-        self,
-        grid: list[list[str]],
-        row: int, col: int,
-        dr: int, dc: int,
-        to_push: tuple[tuple[int, int, str], ...],
-    ) -> None:
-        match grid[next_row := row + dr][next_col := col + dc]:
-            case 'O':
-                self._push_p1(
-                    grid,
-                    next_row, next_col,
-                    dr, dc,
-                    ((next_row, next_col, 'O'),) + to_push,
-                )
-            case '.':
-                for i, j, char in to_push:
-                    grid[i][j] = '.'
-                    grid[i + dr][j + dc] = char
-
     def _push_p2_x(
         self,
         grid: list[list[str]],
@@ -49,20 +29,29 @@ class Day15(Solution):
         push_start: int,
     ) -> None:
         match grid[row][next_col := col + dc]:
+            # encountered box
             case '[' | ']':
                 self._push_p2_x(
                     grid,
+                    # skip over the 2nd half of the box (next_col + dc) and try to find empty space: '.' or new box: '[' | ']'
                     row, next_col + dc, dc,
+                    # index of the lanternfish originally
                     push_start,
                 )
+            # found empty space to push everything we've accumulated into
+            #
+            # `next_col` is the index of the empty space: '.'
             case '.':
                 grid[row][push_start] = '.'
 
-                span = next_col - push_start
-                if dc >= 0:
-                    grid[row][push_start + 1:next_col + 1] = list('@' + '[]' * (span // 2))
+                # rightwards '>' pushing
+                if (span := next_col - push_start) >= 0:
+                    # pushed onto: right after lanternfish -> empty space: [push_start + 1, next_col]
+                    grid[row][push_start + 1:next_col + 1] = '@' + '[]' * (span // 2)
+                # leftwards '<' pushing
                 else:
-                    grid[row][next_col:push_start] = list('[]' * (-span // 2) + '@')
+                    # pushed onto: empty space -> right before lanternfish: [next_col, push_start -1]
+                    grid[row][next_col:push_start] = '[]' * (-span // 2) + '@'
 
     def _push_p2_y(
         self,
@@ -72,10 +61,23 @@ class Day15(Solution):
         to_push: list[tuple[int, int, str]]
     ) -> bool:
         match grid[next_row := row + dr][col]:
+            # left side of box needs to be pushed
             case '[':
+                # add box to `to_push` array so we can push if all checks pass
                 to_push.append((next_row, col, '['))
                 to_push.append((next_row, col + 1, ']'))
 
+                # check if able to be pushed:
+                #
+                # - check if left (current) side will push more boxes (recursively ...)
+                #   (case '[' and case ']' in our match)
+                # OR finally is able to be pushed
+                #   (case '.' and case _: in our match)
+                #
+                # [and] (both of these sides need to be able to be pushed for the entire box to be pushed)
+                #
+                # - check if right (col + 1) side will push more boxes (recursively) OR is able to be pushed
+                #
                 return self._push_p2_y(
                     grid,
                     next_row, col, dr,
@@ -85,8 +87,11 @@ class Day15(Solution):
                     next_row, col + 1, dr,
                     to_push,
                 )
+            # repeat above for if we are currently trying to push the left side of the box
             case ']':
+                # left side (col - 1)
                 to_push.append((next_row, col - 1, '['))
+                # right side (current)
                 to_push.append((next_row, col, ']'))
 
                 return self._push_p2_y(
@@ -98,8 +103,10 @@ class Day15(Solution):
                     next_row, col, dr,
                     to_push,
                 )
+            # found empty space for previous box to push onto
             case '.':
                 return True
+            # hit wall: cannot push
             case _:
                 return False
 
@@ -122,8 +129,28 @@ class Day15(Solution):
                 case _:
                     continue
 
-            self._push_p1(grid, row, col, dr, dc, ((row, col, '@'),))
+            next_row = row
+            next_col = col
 
+            # try to find empty spot to push everything onto
+            while (cell := grid[next_row := next_row + dr][next_col := next_col + dc]) != '.':
+                # hit wall but have not found empty spot: cannot push at all
+                if cell == '#':
+                    break
+            else:
+                # found empty spot to push onto
+                # original lanternfish spot => empty
+                grid[row][col] = '.'
+                # next spot in path => lanternfish
+                grid[row + dr][col + dc] = '@'
+
+                # if the '.' was found more than `1` spot away (`row + dr` or `col + dc`) from the original lanternfish spot:
+                #
+                # this means there were 1 or more boxes in between
+                if next_row != row + dr or next_col != col + dc:
+                    grid[next_row][next_col] = 'O'
+
+            # lanternfish was moved: update `(row, col)` position tracker
             if grid[row][col] != '@':
                 row += dr
                 col += dc
@@ -155,14 +182,27 @@ class Day15(Solution):
                 case _:
                     continue
 
+            # dr != 0 => vertical pushing
+            # the result of `_push_py_2(...)` tells us if we are able to push at all
+            #
             if dr != 0 and self._push_p2_y(grid, row, col, dr, to_push := [(row, col, '@')]):
+                # redundant pushes are found in `to_push`
                 pushed = set()
 
+                # (i, j) => original location of `char` that needs to be pushed in `dr` direction vertically
+                #
+                # `to_push` is stored as: closer to lanternfish to further away
+                # but we want to push the ones furthest from lanternfish away first so we don't overwrite previous pushes with '.'
+                #
+                # hence use `reversed(...)`
                 for i, j, char in reversed(to_push):
+                    # do not push redundantly or pushed characters will be overwritten undesirably
                     if (i, j) not in pushed:
                         grid[i][j] = '.'
                         grid[i + dr][j] = char
                         pushed.add((i, j))
+
+            # horizontal pushing
             else:
                 self._push_p2_x(grid, row, col, dc, col)
 
@@ -170,6 +210,7 @@ class Day15(Solution):
                 row += dr
                 col += dc
 
+        # '[' is always the closest to the left edge of the grid
         return self._gps_sum(grid, '[')
 
     def run(self, inp: str) -> None:
