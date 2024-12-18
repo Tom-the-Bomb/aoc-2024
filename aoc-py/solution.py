@@ -9,11 +9,11 @@ class Solution(ABC):
     NAME: ClassVar[str]
 
     @abstractmethod
-    def part_one(self, inp: str) -> int:
+    def part_one(self, inp: str) -> int | str:
         """Part 1 Solution"""
 
     @abstractmethod
-    def part_two(self, inp: str) -> int:
+    def part_two(self, inp: str) -> int | str:
         """Part 2 Solution"""
 
     @abstractmethod
