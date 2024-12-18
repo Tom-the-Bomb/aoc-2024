@@ -1,27 +1,31 @@
 
-from time import perf_counter
+__all__ = (
+    'find_start',
+    'neighbors_4',
+    'neighbors_diag',
+)
 
-from .solutions import SOLUTIONS
+from typing import Sequence
 
-def get_input(day: int) -> str:
-    with open(f'./inputs/day{day}.txt') as f:
-        return f.read()
+def find_start(grid: Sequence[Sequence[str]], char: str) -> tuple[int, int]:
+    for i, row in enumerate(grid):
+        for j, cell in enumerate(row):
+            if cell == char:
+                return i, j
+    raise ValueError(f"No '{char}' character found in grid")
 
-def run_day(day: int) -> None:
-    try:
-        solution = SOLUTIONS[day - 1]()
-    except IndexError:
-        print(f'Solution does not exist yet for day {day}')
-    else:
-        text = f' Day [{day}] Solution - {solution.NAME} '
-        line = '+-----+' + '-' * len(text) + '+'
-        print(f'\n{line}\n| PY3 |{text}|\n{line}')
+def neighbors_4(row: int, col: int) -> tuple[tuple[int, int], ...]:
+    return (
+        (row, col - 1),
+        (row, col + 1),
+        (row - 1, col),
+        (row + 1, col),
+    )
 
-        inp = get_input(day)
-        # benchmark and run
-        start = perf_counter()
-        solution.run(inp)
-        end = perf_counter()
-
-        print(line := f'Execution time: {(end - start) * 1000:,.2f}ms')
-        print('=' * len(line))
+def neighbors_diag(row: int, col: int) -> tuple[tuple[int, int], ...]:
+    return (
+        (row - 1, col - 1),
+        (row - 1, col + 1),
+        (row + 1, col - 1),
+        (row + 1, col + 1),
+    )

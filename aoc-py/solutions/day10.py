@@ -9,6 +9,7 @@ from typing import ClassVar
 from collections import deque
 
 from ..solution import Solution
+from ..utils import neighbors_4
 
 class Day10(Solution):
     NAME: ClassVar[str] = 'Hoof It'
@@ -33,12 +34,7 @@ class Day10(Solution):
                         if num == 9:
                             nines.add((i, j))
                         else:
-                            for next_i, next_j in (
-                                (i, j - 1),
-                                (i, j + 1),
-                                (i - 1, j),
-                                (i + 1, j),
-                            ):
+                            for next_i, next_j in neighbors_4(i, j):
                                 if (
                                     next_i in range(n_rows)
                                     and next_j in range(n_cols)
@@ -67,12 +63,7 @@ class Day10(Solution):
                         if num == 9:
                             count += 1
                         else:
-                            for next_i, next_j in (
-                                (i, j - 1),
-                                (i, j + 1),
-                                (i - 1, j),
-                                (i + 1, j),
-                            ):
+                            for next_i, next_j in neighbors_4(i, j):
                                 if (
                                     next_i in range(n_rows)
                                     and next_j in range(n_cols)

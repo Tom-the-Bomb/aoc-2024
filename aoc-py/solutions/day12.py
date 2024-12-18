@@ -9,6 +9,7 @@ from typing import ClassVar
 from collections import deque
 
 from ..solution import Solution
+from ..utils import neighbors_4, neighbors_diag
 
 class Day12(Solution):
     NAME: ClassVar[str] = 'Garden Groups'
@@ -34,12 +35,7 @@ class Day12(Solution):
                         i, j = to_check.popleft()
                         perimeter += 4
 
-                        for next_i, next_j in (
-                            (i, j - 1),
-                            (i, j + 1),
-                            (i - 1, j),
-                            (i + 1, j),
-                        ):
+                        for next_i, next_j in neighbors_4(i, j):
                             # no side: neighbor is a cell that is part of the garden
                             if (
                                 next_i in range(n_rows)
@@ -76,12 +72,7 @@ class Day12(Solution):
                     while to_check:
                         i, j = to_check.popleft()
 
-                        for next_i, next_j in (
-                            (i, j - 1),
-                            (i, j + 1),
-                            (i - 1, j),
-                            (i + 1, j),
-                        ):
+                        for next_i, next_j in neighbors_4(i, j):
                             if (
                                 next_i in range(n_rows)
                                 and next_j in range(n_cols)
@@ -91,12 +82,7 @@ class Day12(Solution):
                                 to_check.append(next_c)
                                 local_seen.add(next_c)
 
-                        for adj_i, adj_j in (
-                            (i - 1, j - 1),
-                            (i - 1, j + 1),
-                            (i + 1, j - 1),
-                            (i + 1, j + 1),
-                        ):
+                        for adj_i, adj_j in neighbors_diag(i, j):
                             side1_exists = adj_i in range(n_rows)
                             side2_exists = adj_j in range(n_rows)
 

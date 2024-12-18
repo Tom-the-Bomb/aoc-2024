@@ -8,16 +8,10 @@ __all__ = ('Day6',)
 from typing import ClassVar
 
 from ..solution import Solution
+from ..utils import find_start
 
 class Day6(Solution):
     NAME: ClassVar[str] = 'Guard Gallivant'
-
-    def _find_start(self, grid: list[str]) -> tuple[int, int]:
-        for i, row in enumerate(grid):
-            for j, cell in enumerate(row):
-                if cell == '^':
-                    return i, j
-        raise ValueError("No '^' character found in grid")
 
     def _turn_right(self, dr: int, dc: int) -> tuple[int, int]:
         match dr, dc:
@@ -65,7 +59,7 @@ class Day6(Solution):
 
     def part_one(self, inp: str) -> int:
         grid = inp.splitlines()
-        start = self._find_start(grid)
+        start = find_start(grid, '^')
 
         n_rows = len(grid)
         n_cols = len(grid[0])
@@ -74,7 +68,7 @@ class Day6(Solution):
 
     def part_two(self, inp: str) -> int:
         grid = inp.splitlines()
-        start = self._find_start(grid)
+        start = find_start(grid, '^')
 
         n_rows = len(grid)
         n_cols = len(grid[0])
@@ -100,7 +94,7 @@ class Day6(Solution):
                 if row not in range(n_rows) or col not in range(n_cols):
                     break
 
-                if grid[row][col] == '#' or (row, col) ==  obstacle:
+                if grid[row][col] == '#' or (row, col) == obstacle:
                     row -= dr
                     col -= dc
 

@@ -8,4 +8,4 @@ __all__ = (
 )
 
 from .solutions import SOLUTIONS
-from .utils import get_input, run_day
+from .runner import get_input, run_day

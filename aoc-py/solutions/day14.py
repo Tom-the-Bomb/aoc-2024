@@ -6,6 +6,7 @@ https://adventofcode.com/2024/day/14
 __all__ = ('Day14',)
 
 from typing import ClassVar
+from zlib import compress
 import re
 
 from ..solution import Solution
@@ -67,6 +68,73 @@ class Day14(Solution):
             if len(set(positions)) == len(positions):
                 return t
             t += 1
+
+    def part_two_entropy(self, inp: str) -> int:
+        robots = self._get_robots(inp)
+        w = 101
+        h = 103
+
+        min_entropy = float('inf')
+        time = 0
+
+        for t in range(1, 10000):
+            positions = {
+                ((x + t * vx) % w, (y + t * vy) % h)
+                for x, y, vx, vy, in robots
+            }
+
+            # use size of zlib compression as a measure of entropy
+            #
+            # when there is a tree => there is a cluster => low entropy
+            # (inefficient and slow)
+            if (entropy := len(compress(
+                '\n'.join(
+                    ''.join('O' if (i, j) in positions else '.' for j in range(w))
+                    for i in range(h)
+                ).encode()
+            ))) < min_entropy:
+                min_entropy = entropy
+                time = t
+        return time
+
+    def part_two_p1_entropy(self, inp: str) -> int:
+        robots = self._get_robots(inp)
+        w = 101
+        h = 103
+
+        hw = w // 2
+        hh = h // 2
+
+        min_part_one = float('inf')
+        time = 0
+
+        for t in range(1, 10000):
+            q1 = q2 = q3 = q4 = 0
+
+            # Use the answer from part 1 as a measure of relative entropy value
+            #
+            # (more efficient yet sufficient entropy algorithm)
+            for x, y, vx, vy in robots:
+                x += t * vx
+                y += t * vy
+                x %= w
+                y %= h
+
+                if y < hh:
+                    if x < hw:
+                        q1 += 1
+                    elif x > hw:
+                        q2 += 1
+                elif y > hh:
+                    if x < hw:
+                        q3 += 1
+                    elif x > hw:
+                        q4 += 1
+
+            if (part_one := q1 * q2 * q3 * q4) < min_part_one:
+                min_part_one = part_one
+                time = t
+        return time
 
     def run(self, inp: str) -> None:
         print('Part 1:', p1 := self.part_one(inp))
