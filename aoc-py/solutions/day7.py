@@ -5,7 +5,7 @@ https://adventofcode.com/2024/day/7
 """
 __all__ = ('Day7',)
 
-from typing import ClassVar
+from typing import ClassVar, Callable
 from math import log10
 
 from ..solution import Solution
@@ -55,7 +55,7 @@ class Day7(Solution):
             progression + 1,
         )
 
-    def part_one(self, inp: str) -> int:
+    def _solve(self, inp: str, solve_func: Callable[[int, list[int], int, int], bool]) -> int:
         total = 0
 
         for equation in inp.splitlines():
@@ -64,22 +64,15 @@ class Day7(Solution):
             first, *terms = [int(term) for term in terms.split()]
             target = int(target)
 
-            if self._solve_p1(target, terms, first, 0):
+            if solve_func(target, terms, first, 0):
                 total += target
         return total
+
+    def part_one(self, inp: str) -> int:
+        return self._solve(inp, self._solve_p1)
 
     def part_two(self, inp: str) -> int:
-        total = 0
-
-        for equation in inp.splitlines():
-            target, terms = equation.split(':')
-
-            first, *terms = [int(term) for term in terms.split()]
-            target = int(target)
-
-            if self._solve_p2(target, terms, first, 0):
-                total += target
-        return total
+        return self._solve(inp, self._solve_p2)
 
     def run(self, inp: str) -> None:
         print('Part 1:', p1 := self.part_one(inp))

@@ -57,57 +57,45 @@ impl Day7 {
             progression + 1,
         )
     }
+
+    fn solve<T, F>(inp: T, solve_func: F) -> usize
+    where
+        T: Display,
+        F: Fn(usize, &[usize], usize, usize) -> bool,
+    {
+        inp.to_string()
+            .lines()
+            .filter_map(|equation| {
+                let (target, terms) = equation.split_once(':').unwrap();
+
+                let mut terms = terms
+                    .split_whitespace()
+                    .filter_map(|term| term.parse::<usize>().ok());
+                let first = terms
+                    .next()
+                    .unwrap();
+                let terms = terms
+                    .collect::<Vec<_>>();
+                let target = target
+                    .parse()
+                    .unwrap();
+
+                solve_func(target, &terms, first, 0)
+                    .then_some(target)
+            })
+            .sum()
+    }
 }
 
 impl Solution for Day7 {
     const NAME: &'static str = "Bridge Repair";
 
     fn part_one<T: Display>(&self, inp: T) -> usize {
-        inp.to_string()
-            .lines()
-            .filter_map(|equation| {
-                let (target, terms) = equation.split_once(':').unwrap();
-
-                let mut terms = terms
-                    .split_whitespace()
-                    .filter_map(|term| term.parse::<usize>().ok());
-                let first = terms
-                    .next()
-                    .unwrap();
-                let terms = terms
-                    .collect::<Vec<_>>();
-                let target = target
-                    .parse()
-                    .unwrap();
-
-                Self::solve_p1(target, &terms, first, 0)
-                    .then_some(target)
-            })
-            .sum()
+        Self::solve(inp, Self::solve_p1)
     }
 
     fn part_two<T: Display>(&self, inp: T) -> usize {
-        inp.to_string()
-            .lines()
-            .filter_map(|equation| {
-                let (target, terms) = equation.split_once(':').unwrap();
-
-                let mut terms = terms
-                    .split_whitespace()
-                    .filter_map(|term| term.parse::<usize>().ok());
-                let first = terms
-                    .next()
-                    .unwrap();
-                let terms = terms
-                    .collect::<Vec<_>>();
-                let target = target
-                    .parse()
-                    .unwrap();
-
-                Self::solve_p2(target, &terms, first, 0)
-                    .then_some(target)
-            })
-            .sum()
+        Self::solve(inp, Self::solve_p2)
     }
 
     fn run(&self, inp: String) {
