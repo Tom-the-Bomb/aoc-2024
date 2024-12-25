@@ -42,11 +42,11 @@ impl Day13 {
 impl Solution for Day13 {
     const NAME: &'static str = "Claw Contraption";
 
-    fn part_one<T: Display>(&self, inp: T) -> usize {
+    fn part_one<T: Display>(&self, inp: T) -> Self::OutputP1 {
         Self::solve(inp, 0)
     }
 
-    fn part_two<T: Display>(&self, inp: T) -> usize {
+    fn part_two<T: Display>(&self, inp: T) -> Self::OutputP2 {
         Self::solve(inp, 10_000_000_000_000)
     }
 

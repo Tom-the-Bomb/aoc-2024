@@ -7,22 +7,11 @@ use std::{
     fmt::Display,
     ops::Range,
 };
-use aoc_2024::{Solution, get_grid};
+use aoc_2024::{Solution, get_grid, find_start};
 
 pub struct Day6;
 
 impl Day6 {
-    fn find_start(grid: &[Vec<u8>]) -> (usize, usize) {
-        grid.iter()
-            .enumerate()
-            .find_map(|(i, row)| row
-                .iter()
-                .position(|&cell| cell == b'^')
-                .map(|j| (i, j))
-            )
-            .expect("No '^' character found in grid")
-    }
-
     fn turn_right(dr: i8, dc: i8) -> (i8, i8) {
         match (dr, dc) {
             (1, 0) => (0, -1),
@@ -69,9 +58,9 @@ impl Day6 {
 impl Solution for Day6 {
     const NAME: &'static str = "Guard Gallivant";
 
-    fn part_one<T: Display>(&self, inp: T) -> usize {
+    fn part_one<T: Display>(&self, inp: T) -> Self::OutputP1 {
         let grid = get_grid(inp);
-        let start = Self::find_start(&grid);
+        let start = find_start(&grid, b'^').unwrap();
 
         let rows = 0..grid.len();
         let cols = 0..grid[0].len();
@@ -80,9 +69,9 @@ impl Solution for Day6 {
     }
 
     #[allow(clippy::cast_sign_loss)]
-    fn part_two<T: Display>(&self, inp: T) -> usize {
+    fn part_two<T: Display>(&self, inp: T) -> Self::OutputP2 {
         let grid = get_grid(inp);
-        let start = Self::find_start(&grid);
+        let start = find_start(&grid, b'^').unwrap();
 
         let rows = 0..grid.len();
         let cols = 0..grid[0].len();

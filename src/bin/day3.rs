@@ -11,7 +11,7 @@ pub struct Day3;
 impl Solution for Day3 {
     const NAME: &'static str = "Mull It Over";
 
-    fn part_one<T: Display>(&self, inp: T) -> usize {
+    fn part_one<T: Display>(&self, inp: T) -> Self::OutputP1 {
         Regex::new(r"mul\(([0-9]{1,3}),([0-9]{1,3})\)")
             .unwrap()
             .captures_iter(&inp.to_string())
@@ -23,7 +23,7 @@ impl Solution for Day3 {
             .sum()
     }
 
-    fn part_two<T: Display>(&self, inp: T) -> usize {
+    fn part_two<T: Display>(&self, inp: T) -> Self::OutputP2 {
         let mut add = true;
         let mut total = 0;
 

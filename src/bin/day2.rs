@@ -11,7 +11,7 @@ pub struct Day2;
 impl Solution for Day2 {
     const NAME: &'static str = "Red-Nosed Reports";
 
-    fn part_one<T: Display>(&self, inp: T) -> usize {
+    fn part_one<T: Display>(&self, inp: T) -> Self::OutputP1 {
         inp.to_string()
             .lines()
             .filter(|line| {
@@ -36,7 +36,7 @@ impl Solution for Day2 {
             .count()
     }
 
-    fn part_two<T: Display>(&self, inp: T) -> usize {
+    fn part_two<T: Display>(&self, inp: T) -> Self::OutputP2 {
         inp.to_string()
             .lines()
             .filter(|line| {

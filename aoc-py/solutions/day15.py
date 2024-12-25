@@ -111,7 +111,7 @@ class Day15(Solution):
                 return False
 
     def part_one(self, inp: str) -> int:
-        grid, directions = inp.split('\n\n')
+        grid, directions = inp.split('\n\n', maxsplit=1)
         grid = [list(row) for row in grid.splitlines()]
 
         row, col = find_start(grid, '@')
@@ -158,7 +158,7 @@ class Day15(Solution):
         return self._gps_sum(grid, 'O')
 
     def part_two(self, inp: str) -> int:
-        grid, directions = inp.split('\n\n')
+        grid, directions = inp.split('\n\n', maxsplit=1)
         grid = [
             list(row) for row in grid
                 .replace('#', '##')

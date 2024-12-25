@@ -26,7 +26,7 @@ macro_rules! parse_input {
 impl Solution for Day5 {
     const NAME: &'static str = "Print Queue";
 
-    fn part_one<T: Display>(&self, inp: T) -> usize {
+    fn part_one<T: Display>(&self, inp: T) -> Self::OutputP1 {
         let inp = inp.to_string().replace('\r', "");
         let (rules, updates) = parse_input!(inp);
         let mut total = 0;
@@ -52,7 +52,7 @@ impl Solution for Day5 {
         total
     }
 
-    fn part_two<T: Display>(&self, inp: T) -> usize {
+    fn part_two<T: Display>(&self, inp: T) -> Self::OutputP2 {
         let inp = inp.to_string().replace('\r', "");
         let (rules, updates) = parse_input!(inp);
         let mut total = 0;

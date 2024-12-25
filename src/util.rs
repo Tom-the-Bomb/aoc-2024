@@ -2,6 +2,18 @@ use std::fmt::Display;
 
 #[must_use]
 #[inline]
+pub fn find_start(grid: &[Vec<u8>], char: u8) -> Option<(usize, usize)> {
+    grid.iter()
+        .enumerate()
+        .find_map(|(i, row)| row
+            .iter()
+            .position(|&cell| cell == char)
+            .map(|j| (i, j))
+        )
+}
+
+#[must_use]
+#[inline]
 pub const fn neighbors_4(row: usize, col: usize) -> [(usize, usize); 4] {
     [
         (row, col.wrapping_sub(1)),

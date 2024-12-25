@@ -12,7 +12,7 @@ impl Solution for Day1 {
     /// # Panics
     ///
     /// If lines do not follow "<number>   <number>" format
-    fn part_one<T: Display>(&self, inp: T) -> usize {
+    fn part_one<T: Display>(&self, inp: T) -> Self::OutputP1 {
         let mut list1 = Vec::new();
         let mut list2 = Vec::new();
 
@@ -32,7 +32,7 @@ impl Solution for Day1 {
             .sum()
     }
 
-    fn part_two<T: Display>(&self, inp: T) -> usize {
+    fn part_two<T: Display>(&self, inp: T) -> Self::OutputP2 {
         let mut list1 = Vec::new();
         let mut counter = HashMap::new();
 

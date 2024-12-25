@@ -59,7 +59,7 @@ impl Solution for Day4 {
     const NAME: &'static str = "Ceres Search";
 
     #[allow(clippy::cast_sign_loss)]
-    fn part_one<T: Display>(&self, inp: T) -> usize {
+    fn part_one<T: Display>(&self, inp: T) -> Self::OutputP1 {
         let grid = &get_grid(inp);
         let n_rows = grid.len();
         let n_cols = grid[0].len();
@@ -74,7 +74,7 @@ impl Solution for Day4 {
             .count()
     }
 
-    fn part_two<T: Display>(&self, inp: T) -> usize {
+    fn part_two<T: Display>(&self, inp: T) -> Self::OutputP2 {
         let grid = &get_grid(inp);
         let n_cols = grid[0].len();
 

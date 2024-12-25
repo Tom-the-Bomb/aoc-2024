@@ -1,3 +1,5 @@
+#![feature(associated_type_defaults)]
+
 use std::{
     time::Instant,
     fs::read_to_string

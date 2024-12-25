@@ -18,7 +18,7 @@ pub struct Day12;
 impl Solution for Day12 {
     const NAME: &'static str = "Garden Groups";
 
-    fn part_one<T: Display>(&self, inp: T) -> usize {
+    fn part_one<T: Display>(&self, inp: T) -> Self::OutputP1 {
         let grid = get_grid(inp);
         let rows = 0..grid.len();
         let cols = 0..grid[0].len();
@@ -47,9 +47,8 @@ impl Solution for Day12 {
                                 && cols.contains(&next_j)
                                 && grid[next_i][next_j] == cell
                             {
-                                if !local_seen.contains(&next) {
+                                if local_seen.insert(next) {
                                     to_check.push_back(next);
-                                    local_seen.insert(next);
                                 }
                                 perimeter -= 1;
                             }
@@ -63,7 +62,7 @@ impl Solution for Day12 {
         total
     }
 
-    fn part_two<T: Display>(&self, inp: T) -> usize {
+    fn part_two<T: Display>(&self, inp: T) -> Self::OutputP2 {
         let grid = get_grid(inp);
         let rows = 0..grid.len();
         let cols = 0..grid[0].len();

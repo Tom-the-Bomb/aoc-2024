@@ -30,7 +30,7 @@ impl Day14 {
 impl Solution for Day14 {
     const NAME: &'static str = "Mull It Over";
 
-    fn part_one<T: Display>(&self, inp: T) -> usize {
+    fn part_one<T: Display>(&self, inp: T) -> Self::OutputP1 {
         let robots = Self::get_robots(inp);
 
         let w = 101;
@@ -62,7 +62,7 @@ impl Solution for Day14 {
         q1 * q2 * q3 * q4
     }
 
-    fn part_two<T: Display>(&self, inp: T) -> usize {
+    fn part_two<T: Display>(&self, inp: T) -> Self::OutputP2 {
         let robots = Self::get_robots(inp);
 
         let w = 101;

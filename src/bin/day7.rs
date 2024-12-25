@@ -90,11 +90,11 @@ impl Day7 {
 impl Solution for Day7 {
     const NAME: &'static str = "Bridge Repair";
 
-    fn part_one<T: Display>(&self, inp: T) -> usize {
+    fn part_one<T: Display>(&self, inp: T) -> Self::OutputP1 {
         Self::solve(inp, Self::solve_p1)
     }
 
-    fn part_two<T: Display>(&self, inp: T) -> usize {
+    fn part_two<T: Display>(&self, inp: T) -> Self::OutputP2 {
         Self::solve(inp, Self::solve_p2)
     }
 

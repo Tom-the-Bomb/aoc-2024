@@ -10,7 +10,7 @@ pub struct Day9;
 impl Solution for Day9 {
     const NAME: &'static str = "Disk Fragmenter";
 
-    fn part_one<T: Display>(&self, inp: T) -> usize {
+    fn part_one<T: Display>(&self, inp: T) -> Self::OutputP1 {
         let mut disk = Vec::new();
         let mut num = 0;
 
@@ -48,7 +48,7 @@ impl Solution for Day9 {
             .sum()
     }
 
-    fn part_two<T: Display>(&self, inp: T) -> usize {
+    fn part_two<T: Display>(&self, inp: T) -> Self::OutputP2 {
         let mut disk = Vec::new();
         let mut spaces = Vec::new();
         let mut blocks = Vec::new();

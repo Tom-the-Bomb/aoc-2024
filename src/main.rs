@@ -29,7 +29,7 @@ fn main() {
     {
         println!("{}",
             run_bin_day(day)
-                .unwrap_or(format!("Solution does not exist yet for day {day}"))
+                .unwrap_or_else(|| format!("Solution does not exist yet for day {day}"))
         );
     } else {
         let mut day = 1;

@@ -46,8 +46,8 @@ class Day16(Solution):
                 next_dr = next_row - row
                 next_dc = next_col - col
 
-                # hit a wall or attempting to go backwards
-                if grid[next_row][next_col] == '#' or next_dr != -dr and next_dc != -dc:
+                # hit a wall or is attempting to go backwards
+                if grid[next_row][next_col] == '#' or next_dr == -dr and next_dc == -dc:
                     continue
 
                 # new score: `+1` if straight else `+1001` (`1000` for turning & `1` for moving again in the new direction)
