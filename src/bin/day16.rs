@@ -12,6 +12,7 @@ use aoc_2024::{Solution, neighbors_4, find_start, get_grid};
 pub struct Day16;
 
 impl Day16 {
+    #[allow(clippy::cast_possible_wrap, clippy::similar_names)]
     fn traverse_maze<T: Display>(inp: T, is_part2: bool) -> usize {
         let grid = get_grid(inp);
         let start @ (start_row, start_col) = find_start(&grid, b'S').unwrap();
