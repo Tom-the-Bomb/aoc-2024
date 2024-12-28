@@ -84,12 +84,12 @@ class Day20(Solution):
                     # where radius is all values within [2, 20] picoseconds to test for
                     #
                     # if `dr = dc = 0` then there will be duplicates, that's why we use a `set` not a traditional `tuple`
-                    for end_i, end_j in frozenset({
+                    for end_i, end_j in {
                         (start_i - dr, start_j - dc),
                         (start_i - dr, start_j + dc),
                         (start_i + dr, start_j - dc),
                         (start_i + dr, start_j + dc),
-                    }):
+                    }:
                         if (
                             (end_dist := path.get((end_i, end_j))) is not None
                             # `end_dist - start_dist` = original distance to go from start -> end (direction matters)
