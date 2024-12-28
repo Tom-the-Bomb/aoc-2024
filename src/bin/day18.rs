@@ -25,7 +25,7 @@ impl Day18 {
             .collect()
     }
 
-    fn find_path(corrupted: &Vec<(usize, usize)>, bytes_fell: usize) -> Option<usize> {
+    fn find_path(corrupted: &[(usize, usize)], bytes_fell: usize) -> Option<usize> {
         let rows = 0..=70;
         let cols = 0..=70;
 
@@ -87,7 +87,7 @@ impl Solution for Day18 {
         }
 
         let byte = corrupted[mid];
-        return format!("{},{}", byte.0, byte.1);
+        format!("{},{}", byte.0, byte.1)
     }
 
     fn run(&self, inp: String) {

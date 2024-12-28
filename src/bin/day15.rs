@@ -25,7 +25,7 @@ impl Solution for Day15 {
         println!("Part 1: {p1}");
         println!("Part 2: {p2}");
 
-        assert_eq!(p1, 164_7150_528);
+        assert_eq!(p1, 0);
         assert_eq!(p2, 70_478_672);
     }
 }

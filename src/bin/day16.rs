@@ -85,7 +85,7 @@ impl Solution for Day16 {
         println!("Part 1: {p1}");
         println!("Part 2: {p2}");
 
-        assert_eq!(p1, 105496);
+        assert_eq!(p1, 105_496);
         assert_eq!(p2, 524);
     }
 }
