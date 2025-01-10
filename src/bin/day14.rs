@@ -1,4 +1,4 @@
-//! Day 14: Mull It Over
+//! Day 14: Restroom Redoubt
 //!
 //! <https://adventofcode.com/2024/day/14>
 
@@ -28,7 +28,7 @@ impl Day14 {
 }
 
 impl Solution for Day14 {
-    const NAME: &'static str = "Mull It Over";
+    const NAME: &'static str = "Restroom Redoubt";
 
     fn part_one<T: Display>(&self, inp: T) -> Self::OutputP1 {
         let robots = Self::get_robots(inp);
